@@ -1,18 +1,20 @@
-// src/components/Header.jsx
-import React, { useState } from 'react';
 
-const Header = () => {
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
+const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
- 
+    const {logout} = useAuth();
  
     const handleLogout = () => {
-    // your logout logic here
+    logout();
     console.log("User logged out");
   };
     const user = {
     name: "Mohit Rawal",
     email: "mohit@example.com",
-    avatar: "https://i.pravatar.cc/40", // example avatar
+    avatar: "https://i.pravatar.cc/40",
   };
 
 
@@ -33,28 +35,28 @@ const Header = () => {
 
         {/* Navigation */}
         <nav className="hidden lg:flex lg:mr-[30%] md:mr-80 space-x-8 text-gray-600 font-medium">
-          <a href="#" className="hover:text-primary transition duration-300">Home</a>
-          <a href="#" className="hover:text-primary transition duration-300">About Us</a>
-          <a href="#" className="hover:text-primary transition duration-300">Contact</a>
-            <a href="#" className="hover:text-primary transition duration-300">Blog</a>
-            <a href="#" className="hover:text-primary transition duration-300">Preferred Careers</a>
-            <a href="#" className="hover:text-primary transition duration-300">Institutions</a>
+          <Link to="/dashboard" className="hover:text-primary transition duration-300">Home</Link>
+          <Link to="/about" className="hover:text-primary transition duration-300">About Us</Link>
+
+          <Link to="/career" className="hover:text-primary transition duration-300">Preferred Careers</Link>
+          <Link to="/institutions" className="hover:text-primary transition duration-300">Institutions</Link>
         </nav>
 
-        {/* Upgrade Button */}
+        {/* Upgrade Button  */}
+        <Link to="/premium" className='mb-10 ml-20' >
         <button
   type="button"
   className="absolute right-24 hidden md:right-44 md:flex bg-gradient-to-r from-primary to-blue-400 text-black font-semibold py-2 px-5 rounded-lg shadow-md 
              hover:from-blue-400 hover:to-primary transition duration-300  items-center justify-center cursor-pointer"
-  aria-label="Upgrade to Premium"
->
-  Upgrade to Premium
-  <svg
-    className="ml-2 h-4 w-4"
-    fill="none"
+            aria-label="Upgrade to Premium"
+          >
+            Upgrade to Premium
+            <svg
+              className="ml-2 h-4 w-4"
+              fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns="http://www.w3.org/2000/svg" 
   >
     <path
       strokeLinecap="round"
@@ -64,6 +66,7 @@ const Header = () => {
     ></path>
   </svg>
 </button>
+</Link>
 
 
 {/* User Avatar */}
@@ -102,7 +105,7 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;
 
 
 
