@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import JobCard from "../components/JobCard";
+import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
   const jobNotices = [
@@ -59,7 +59,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-light-gray font-poppins text-text-color">
-      <Header />
+      <Navbar />
       <SearchBar />
 
       <main className="container mx-auto px-4 py-8">
