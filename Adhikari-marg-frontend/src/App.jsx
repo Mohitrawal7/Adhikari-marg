@@ -12,12 +12,13 @@ import SingleJobPage from "./pages/SingleJobPage";
 import InstitutionPage from "./pages/InstitutionPage";
 import PremiumPage from "./pages/PremiumPage";
 import PaymentPage from "./pages/PaymentPage";
+import PremiumRoute from "./components/PremiumRoute";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
@@ -39,17 +40,17 @@ function App() {
         <Route
           path="/career"
           element={
-            <PremiumPage>
+            <PremiumRoute>
               <CareerPage />
-            </PremiumPage>
+            </PremiumRoute>
           }
         />
         <Route
           path="/institutions"
           element={
-            <PremiumPage>
+            <PremiumRoute>
               <InstitutionPage />
-            </PremiumPage>
+            </PremiumRoute>
           }
         />
         <Route
@@ -69,7 +70,7 @@ function App() {
           }
         />
         <Route
-          path="/job/:id"
+          path="/jobs/:jobId"
           element={
             <ProtectedRoute>
               <SingleJobPage />

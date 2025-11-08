@@ -27,11 +27,14 @@ public class UserController {
 
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
+System.out.println(user);
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
-        userDto.setRole(user.getRole());  //role in dto
+        userDto.setRole(user.getRole());
+        userDto.setEmail(user.getEmail());
+        userDto.setPremium(user.isPremium());
+        userDto.setDOB(user.getDOB());
 
         return ResponseEntity.ok(userDto);
     }
