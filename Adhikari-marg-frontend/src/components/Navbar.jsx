@@ -19,7 +19,7 @@ const Navbar = () => {
   try {
     const response = await api.get("/api/users/me"); // axios instance
     setUser(response.data);
-    console.log("uii ");
+    // console.log("uii ");
     console.log("Loaded user:", response.data);
   } catch (error) {
     console.error("Error loading user:", error);

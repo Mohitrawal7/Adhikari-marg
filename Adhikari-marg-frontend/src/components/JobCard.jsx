@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ jobId, jobTitle, agency, location, deadline, qualification}) => {
-  console.log("Rendering JobCard for jobId:", jobId);
+  // console.log("Rendering JobCard for jobId:", jobId);
   return (
     <Link
       to={`/jobs/${jobId}`}

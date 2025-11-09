@@ -13,6 +13,7 @@ import InstitutionPage from "./pages/InstitutionPage";
 import PremiumPage from "./pages/PremiumPage";
 import PaymentPage from "./pages/PaymentPage";
 import PremiumRoute from "./components/PremiumRoute";
+import JobPostPage from "./pages/JobPostPage";
 
 function App() {
   return (
@@ -66,6 +67,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PremiumPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/job-post"
+          element={
+            <ProtectedRoute>
+              <JobPostPage />
             </ProtectedRoute>
           }
         />
