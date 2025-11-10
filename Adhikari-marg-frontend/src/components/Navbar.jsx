@@ -15,19 +15,18 @@ const Navbar = () => {
     console.log("User logged out");
   };
 
- const fetchUser = async () => {
-  try {
-    const response = await api.get("/api/users/me"); // axios instance
-    setUser(response.data);
-    // console.log("uii ");
-    console.log("Loaded user:", response.data);
-  } catch (error) {
-    console.error("Error loading user:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("/api/users/me"); // axios instance
+      setUser(response.data);
+      // console.log("uii ");
+      console.log("Loaded user:", response.data);
+    } catch (error) {
+      console.error("Error loading user:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchUser();
@@ -36,24 +35,27 @@ const Navbar = () => {
   return (
     <header className="bg-white shadow-sm py-4">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <svg
-            className="h-8 w-8 text-primary"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2L2 21h20L12 2zm0 6l-5.33 10h10.66L12 8z" />
-          </svg>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold text-primary">
-              Adhikari-Marg
-            </span>
-            <span className="text-xs text-gray-500">
-              The Direct Path to Public Service Success
-            </span>
+        <Link to="/dashboard" className="flex items-center space-x-2">
+          {/* Logo */}
+
+          <div className="flex items-center space-x-2">
+            <svg
+              className="h-8 w-8 text-primary"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2L2 21h20L12 2zm0 6l-5.33 10h10.66L12 8z" />
+            </svg>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold text-primary">
+                Adhikari-Marg
+              </span>
+              <span className="text-xs text-gray-500">
+                The Direct Path to Public Service Success
+              </span>
+            </div>
           </div>
-        </div>
+        </Link>
 
         {/* Navigation */}
         <nav className="hidden lg:flex lg:mr-[30%] md:mr-80 space-x-8 text-gray-600 font-medium">

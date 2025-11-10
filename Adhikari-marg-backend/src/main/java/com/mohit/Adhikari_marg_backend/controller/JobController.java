@@ -6,9 +6,11 @@ import com.mohit.Adhikari_marg_backend.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -50,10 +52,12 @@ public class JobController {
 
     // --- ORGANIZATION Role Restricted CRUD Operations ---
 
-    @PostMapping
-    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can create jobs
-    public ResponseEntity<JobDto> createJob(@Valid @RequestBody JobDto jobDto) {
-        JobDto createdJob = jobService.createJob(jobDto);
+    @PostMapping(consumes = {"multipart/form-data"})
+//    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can create jobs
+    public ResponseEntity<JobDto> createJob(@RequestPart("job") @Valid  JobDto jobDto,
+                                            @RequestPart(value = "pdfFile",required = false)MultipartFile pdfFile
+                                            ) {
+        JobDto createdJob = jobService.createJob(jobDto,pdfFile);
         return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
     }
 
@@ -64,10 +68,26 @@ public class JobController {
         return ResponseEntity.ok(updatedJob);
     }
 
-    @DeleteMapping("/{jobId}")
-    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can delete jobs
-    public ResponseEntity<Void> deleteJob(@PathVariable Long jobId) {
-        jobService.deleteJob(jobId);
-        return ResponseEntity.noContent().build();
+
+    @GetMapping("/download-pdf/{jobId}")
+    public ResponseEntity<byte[]> downloadPdf(@PathVariable Long jobId) {
+        byte[] pdfData = jobService.getJobPdf(jobId);
+        String fileName = jobService.getJobPdfFileName(jobId);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfData);
     }
+
+
+
+//
+//    @DeleteMapping("/{jobId}")
+//    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can delete jobs
+//    public ResponseEntity<Void> deleteJob(@PathVariable Long jobId) {
+//        jobService.deleteJob(jobId);
+//        return ResponseEntity.noContent().build();
+//    }
+
 }

@@ -8,12 +8,12 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/Homepage";
 import CareerPage from "./pages/CareerPage";
 import AboutPage from "./pages/AboutPage";
-import SingleJobPage from "./pages/SingleJobPage";
 import InstitutionPage from "./pages/InstitutionPage";
 import PremiumPage from "./pages/PremiumPage";
 import PaymentPage from "./pages/PaymentPage";
 import PremiumRoute from "./components/PremiumRoute";
 import JobPostPage from "./pages/JobPostPage";
+import JobDetailsPage from "./pages/JobDetailsPage";
 
 function App() {
   return (
@@ -82,7 +82,7 @@ function App() {
           path="/jobs/:jobId"
           element={
             <ProtectedRoute>
-              <SingleJobPage />
+              <JobDetailsPage />
             </ProtectedRoute>
           }
         />

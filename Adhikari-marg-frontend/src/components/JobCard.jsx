@@ -1,8 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const JobCard = ({ jobId, jobTitle, agency, location, deadline, qualification}) => {
-  // console.log("Rendering JobCard for jobId:", jobId);
+const JobCard = ({
+  jobId,
+  jobTitle,
+  agency,
+  location,
+  deadline,
+  qualification,
+}) => {
+  // console.log("Rendering JobCard for jobId:", jobId, jobTitle);
   return (
     <Link
       to={`/jobs/${jobId}`}
@@ -15,8 +22,6 @@ const JobCard = ({ jobId, jobTitle, agency, location, deadline, qualification}) 
       <p className="text-gray-500 text-sm mt-2">
         Deadline: <span className="font-medium">{deadline}</span>
       </p>
-
-    
     </Link>
   );
 };

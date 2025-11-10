@@ -18,6 +18,34 @@ public class JobDto {
     private String qualification;
     private LocalDate deadline;
     private LocalDate postedOn;
+    private String requirement;
+    private byte[] pdfFile;
+    private String pdfFileName;
+
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    public byte[] getPdfFile() {
+        return pdfFile;
+    }
+
+    public void setPdfFile(byte[] pdfFile) {
+        this.pdfFile = pdfFile;
+    }
+
+    public String getPdfFileName() {
+        return pdfFileName;
+    }
+
+    public void setPdfFileName(String pdfFileName) {
+        this.pdfFileName = pdfFileName;
+    }
 
     public Long getJobId() {
         return JobId;

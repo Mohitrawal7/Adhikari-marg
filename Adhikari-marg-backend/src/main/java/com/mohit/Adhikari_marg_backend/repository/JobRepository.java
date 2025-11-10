@@ -13,6 +13,10 @@ import java.util.List;
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
 
+    List<Job> findByDeadlineBefore(LocalDate date);
+
+
+
     // Find jobs by location (case-insensitive)
     List<Job> findByLocationContainingIgnoreCase(String location);
 
