@@ -3,6 +3,7 @@ package com.mohit.Adhikari_marg_backend.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -32,6 +33,49 @@ public class User {
     @Column(nullable = false)
     private LocalDate DOB;
 
+    @Column(nullable = false)
+    private String question;
+
+    @Column(nullable = false)
+    private String answer;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<UserPreference> preferences;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Notification> notifications;
+//
+//    public List<UserPreference> getPreferences() {
+//        return preferences;
+//    }
+//
+//    public void setPreferences(List<UserPreference> preferences) {
+//        this.preferences = preferences;
+//    }
+//
+//    public List<Notification> getNotifications() {
+//        return notifications;
+//    }
+//
+//    public void setNotifications(List<Notification> notifications) {
+//        this.notifications = notifications;
+//    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public Long getId() {
         return id;

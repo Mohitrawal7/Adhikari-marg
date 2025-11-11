@@ -8,16 +8,19 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/Homepage";
 import CareerPage from "./pages/CareerPage";
 import AboutPage from "./pages/AboutPage";
-import SingleJobPage from "./pages/SingleJobPage";
 import InstitutionPage from "./pages/InstitutionPage";
 import PremiumPage from "./pages/PremiumPage";
 import PaymentPage from "./pages/PaymentPage";
+import PremiumRoute from "./components/PremiumRoute";
+import JobPostPage from "./pages/JobPostPage";
+import ChangePassword from "./pages/ChangePassword";
+import JobDetailsPage from "./pages/JobDetailsPage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
@@ -25,6 +28,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
             </ProtectedRoute>
           }
         />
@@ -39,17 +50,17 @@ function App() {
         <Route
           path="/career"
           element={
-            <PremiumPage>
+            <PremiumRoute>
               <CareerPage />
-            </PremiumPage>
+            </PremiumRoute>
           }
         />
         <Route
           path="/institutions"
           element={
-            <PremiumPage>
+            <PremiumRoute>
               <InstitutionPage />
-            </PremiumPage>
+            </PremiumRoute>
           }
         />
         <Route
@@ -69,10 +80,18 @@ function App() {
           }
         />
         <Route
-          path="/job/:id"
+          path="/job-post"
           element={
             <ProtectedRoute>
-              <SingleJobPage />
+              <JobPostPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/jobs/:jobId"
+          element={
+            <ProtectedRoute>
+              <JobDetailsPage />
             </ProtectedRoute>
           }
         />

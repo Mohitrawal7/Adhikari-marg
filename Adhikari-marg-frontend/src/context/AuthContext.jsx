@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     // Fetch user data after setting token
     const userResponse = await api.get("/api/users/me");
     setUser(userResponse.data);
-
+console.log("User logged in:", userResponse.data);
     navigate("/dashboard");
   };
 
