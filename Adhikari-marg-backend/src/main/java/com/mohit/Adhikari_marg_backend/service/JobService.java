@@ -152,28 +152,11 @@ public class JobService {
      * @param dateFilter Optional string for date filtering ("today", "lastWeek", "all").
      * @return List of JobDto matching the criteria.
      */
-    public List<JobDto> filterJobs(String location, String qualification, String dateFilter) {
+    public List<JobDto> filterJobs(String location, String qualification) {
         LocalDate postedOnStart = null;
         LocalDate postedOnEnd = null;
         LocalDate today = LocalDate.now();
 
-        if (dateFilter != null) {
-            switch (dateFilter.toLowerCase()) {
-                case "today":
-                    postedOnStart = today;
-                    postedOnEnd = today;
-                    break;
-                case "lastweek":
-                    // Start of last week (Monday) or 7 days ago. Let's use 7 days ago for simplicity.
-                    postedOnStart = today.minusDays(6); // Today + 6 previous days = 7 days total
-                    postedOnEnd = today;
-                    break;
-                case "all":
-                default:
-                    // No specific date filter
-                    break;
-            }
-        }
         // If location or qualification are empty strings, treat as null for the query
         String finalLocation = (location != null && location.trim().isEmpty()) ? null : location;
         String finalQualification = (qualification != null && qualification.trim().isEmpty()) ? null : qualification;

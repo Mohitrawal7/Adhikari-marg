@@ -19,6 +19,8 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
+//    @Autowired
+//    private NotificationService notificationService;
 
     @Autowired
     public JobController(JobService jobService) {
@@ -30,10 +32,10 @@ public class JobController {
     @GetMapping("/filter")
     public ResponseEntity<List<JobDto>> filterJobs(
             @RequestParam(required = false) String location,
-            @RequestParam(required = false) String qualification,
-            @RequestParam(required = false) String dateFilter // "today", "lastWeek", "all"
+            @RequestParam(required = false) String qualification
+            // "today", "lastWeek", "all"
     ) {
-        List<JobDto> jobs = jobService.filterJobs(location, qualification, dateFilter);
+        List<JobDto> jobs = jobService.filterJobs(location, qualification);
         return ResponseEntity.ok(jobs);
     }
 
@@ -58,6 +60,7 @@ public class JobController {
                                             @RequestPart(value = "pdfFile",required = false)MultipartFile pdfFile
                                             ) {
         JobDto createdJob = jobService.createJob(jobDto,pdfFile);
+//        notificationService.checkAndNotify(createdJob);
         return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
     }
 
@@ -79,6 +82,8 @@ public class JobController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfData);
     }
+
+
 
 
 

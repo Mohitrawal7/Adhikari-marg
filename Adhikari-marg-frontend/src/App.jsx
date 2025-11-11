@@ -13,6 +13,7 @@ import PremiumPage from "./pages/PremiumPage";
 import PaymentPage from "./pages/PaymentPage";
 import PremiumRoute from "./components/PremiumRoute";
 import JobPostPage from "./pages/JobPostPage";
+import ChangePassword from "./pages/ChangePassword";
 import JobDetailsPage from "./pages/JobDetailsPage";
 
 function App() {
@@ -27,6 +28,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
             </ProtectedRoute>
           }
         />

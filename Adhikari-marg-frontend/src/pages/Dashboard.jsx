@@ -241,7 +241,6 @@ const Dashboard = () => {
   const [filters, setFilters] = useState({
     location: "",
     qualification: "",
-    dateFilter: "all",
   });
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -273,9 +272,7 @@ const Dashboard = () => {
       const params = {};
       if (filters.location.trim()) params.location = filters.location.trim();
       if (filters.qualification.trim()) params.qualification = filters.qualification.trim();
-      if (filters.dateFilter && filters.dateFilter !== "all")
-        params.dateFilter = filters.dateFilter;
-
+      
       // Fetch from backend
       const response = Object.keys(params).length
         ? await api.get("/api/jobs/filter", { params })
@@ -362,17 +359,6 @@ const Dashboard = () => {
           </select>
 
 
-          <select
-            value={filters.dateFilter}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, dateFilter: e.target.value }))
-            }
-            className="border rounded-lg px-4 py-2 w-full md:w-1/6"
-          >
-            <option value="all">All Dates</option>
-            <option value="today">Today</option>
-            <option value="lastWeek">Last Week</option>
-          </select>
         </div>
 
         {/* Job List */}

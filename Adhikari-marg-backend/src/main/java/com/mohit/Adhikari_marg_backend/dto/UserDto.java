@@ -12,6 +12,8 @@ public class UserDto {
     private String email;
     private boolean isPremium;
     private LocalDate DOB;
+    private String question;
+    private String answer;
 
     public String getRole() {
         return role;
@@ -60,4 +62,21 @@ public class UserDto {
     public void setDOB(LocalDate DOB) {
         this.DOB = DOB;
     }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
 }
