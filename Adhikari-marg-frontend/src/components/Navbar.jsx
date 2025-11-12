@@ -142,7 +142,7 @@ const Navbar = () => {
                   {user.email || "No email"}
                 </p>
               </div>
-              <Link to="/change-password">
+              <Link className="ml-4" to="/change-password">
               Change password
               </Link>
               <div className="flex flex-col">

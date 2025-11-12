@@ -1,5 +1,6 @@
 package com.mohit.Adhikari_marg_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -32,6 +33,18 @@ public class User {
 
     @Column(nullable = false)
     private LocalDate DOB;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Institution> institutions;
+
+    public List<Institution> getInstitutions() {
+        return institutions;
+    }
+
+    public void setInstitutions(List<Institution> institutions) {
+        this.institutions = institutions;
+    }
 
     @Column(nullable = false)
     private String question;

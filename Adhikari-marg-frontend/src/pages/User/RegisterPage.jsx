@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { Card, Form, Input, Button, Typography, message,DatePicker } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import styles from "../style"; 
+import styles from "../../style"; 
 
 const { Title } = Typography;
 

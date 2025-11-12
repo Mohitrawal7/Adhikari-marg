@@ -1,23 +1,26 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/User/LoginPage";
+import RegisterPage from "./pages/User/RegisterPage";
 import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import "./App.css";
-import { useAuth } from "./context/AuthContext";
-import RegisterPage from "./pages/RegisterPage";
-import HomePage from "./pages/Homepage";
-import CareerPage from "./pages/CareerPage";
+import ChangePassword from "./pages/User/ChangePassword"; 
 import AboutPage from "./pages/AboutPage";
-import InstitutionPage from "./pages/InstitutionPage";
-import PremiumPage from "./pages/PremiumPage";
+import CareerPage from "./pages/CareerPage";
+import InstitutionPage from "./pages/Institution/InstitutionPage";
+import EsewaPayment from "./pages/payment/EsewaPayment";
+import PremiumPage from "./pages/User/PremiumPage";
+import JobPostPage from "./pages/Job/JobPostPage";
+import JobDetailsPage from "./pages/Job/JobDetailsPage";
+import InstitutionsPage from "./pages/Institution/InstitutionPage";
+import CreateInstitution from "./pages/Institution/CreateInstitution";
+import CreateCourse from "./pages/Course/CreateCourse";
+import CourcePage from "./pages/Course/CourcePage";
+import CourceDetails from "./pages/Course/CourceDetails";
+import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import PaymentFailure from "./pages/payment/PaymentFailure";
+import ProtectedRoute from "./components/ProtectedRoute";
 import PremiumRoute from "./components/PremiumRoute";
-import JobPostPage from "./pages/JobPostPage";
-import ChangePassword from "./pages/ChangePassword";
-import JobDetailsPage from "./pages/JobDetailsPage";
-import EsewaPayment from "./pages/EsewaPayment";
-import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentFailure from "./pages/PaymentFailure";
 
 function App() {
   return (
@@ -99,6 +102,46 @@ function App() {
             <ProtectedRoute>
               <JobDetailsPage />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/institutions"
+          element={
+            <ProtectedRoute>
+              <InstitutionsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/institutions/create"
+          element={
+            <ProtectedRoute>
+              <CreateInstitution />
+            </ProtectedRoute> 
+          }
+        />
+        <Route
+          path="/institutions/:institutionId/courses/create"
+          element={
+            <ProtectedRoute>
+              <CreateCourse />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/institutions/:institutionId/courses"
+          element={
+            <ProtectedRoute>
+         <CourcePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/courses/:courseId"
+          element={
+            <ProtectedRoute>
+              <CourceDetails />
+              </ProtectedRoute>
           }
         />
 

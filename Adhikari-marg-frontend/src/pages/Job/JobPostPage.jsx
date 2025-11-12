@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axiosConfig";
+import api from "../../api/axiosConfig";
 import {
   Card,
   Form,
@@ -12,7 +12,7 @@ import {
   Upload,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 
 const { Title } = Typography;
 const { TextArea } = Input;

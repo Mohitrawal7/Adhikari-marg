@@ -1,8 +1,8 @@
 // src/pages/EsewaPayment.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import api from "../api/axiosConfig";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../api/axiosConfig";
 
 const EsewaPayment = () => {
   const { user, setUser } = useAuth();
