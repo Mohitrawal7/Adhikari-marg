@@ -86,6 +86,7 @@ const Navbar = () => {
         </nav>
 
         {/* Upgrade Button */}
+      {user.premium ? null : (
         <Link to="/premium" className="mb-10 ml-20">
           <button
             type="button"
@@ -109,6 +110,7 @@ const Navbar = () => {
             </svg>
           </button>
         </Link>
+      )}
 
         {/* User Avatar */}
         <div className="absolute right-4 relative">

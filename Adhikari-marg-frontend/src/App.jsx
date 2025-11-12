@@ -4,17 +4,20 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
+import { useAuth } from "./context/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/Homepage";
 import CareerPage from "./pages/CareerPage";
 import AboutPage from "./pages/AboutPage";
 import InstitutionPage from "./pages/InstitutionPage";
 import PremiumPage from "./pages/PremiumPage";
-import PaymentPage from "./pages/PaymentPage";
 import PremiumRoute from "./components/PremiumRoute";
 import JobPostPage from "./pages/JobPostPage";
 import ChangePassword from "./pages/ChangePassword";
 import JobDetailsPage from "./pages/JobDetailsPage";
+import EsewaPayment from "./pages/EsewaPayment";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailure from "./pages/PaymentFailure";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-failure" element={<PaymentFailure />} />
+
         <Route
           path="/dashboard"
           element={
@@ -67,7 +73,7 @@ function App() {
           path="/payment"
           element={
             <ProtectedRoute>
-              <PaymentPage />
+              <EsewaPayment />
             </ProtectedRoute>
           }
         />

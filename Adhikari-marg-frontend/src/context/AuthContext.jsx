@@ -49,7 +49,7 @@ console.log("User logged in:", userResponse.data);
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, isAuthenticated: !!user }}
+      value={{ user,setUser, login, logout, isAuthenticated: !!user }}
     >
       {!loading && children}
     </AuthContext.Provider>
