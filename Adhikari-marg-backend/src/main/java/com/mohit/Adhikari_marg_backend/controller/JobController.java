@@ -2,15 +2,18 @@
 package com.mohit.Adhikari_marg_backend.controller;
 
 import com.mohit.Adhikari_marg_backend.dto.JobDto;
+import com.mohit.Adhikari_marg_backend.exception.ResourceNotFoundException;
 import com.mohit.Adhikari_marg_backend.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -33,7 +36,6 @@ public class JobController {
     public ResponseEntity<List<JobDto>> filterJobs(
             @RequestParam(required = false) String location,
             @RequestParam(required = false) String qualification
-            // "today", "lastWeek", "all"
     ) {
         List<JobDto> jobs = jobService.filterJobs(location, qualification);
         return ResponseEntity.ok(jobs);
@@ -41,9 +43,7 @@ public class JobController {
 
     @GetMapping
     public ResponseEntity<List<JobDto>> getAllJobs() {
-        // Can be accessed by anyone, but CRUD is restricted.
-        // For simplicity, getAllJobs also made public. Consider if this should be restricted.
-        return ResponseEntity.ok(jobService.getAllJobs());
+       return ResponseEntity.ok(jobService.getAllJobs());
     }
 
     @GetMapping("/{jobId}")
@@ -57,42 +57,44 @@ public class JobController {
     @PostMapping(consumes = {"multipart/form-data"})
 //    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can create jobs
     public ResponseEntity<JobDto> createJob(@RequestPart("job") @Valid  JobDto jobDto,
-                                            @RequestPart(value = "pdfFile",required = false)MultipartFile pdfFile
+                                            @RequestPart(value = "file",required = false)MultipartFile file
                                             ) {
-        JobDto createdJob = jobService.createJob(jobDto,pdfFile);
-//        notificationService.checkAndNotify(createdJob);
-        return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
+        try {
+            JobDto createdJob = jobService.createJob(jobDto, file);
+            // notificationService.checkAndNotify(createdJob); // Uncomment if using NotificationService
+            return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating job with file: " + e.getMessage(), e);
+        }
     }
 
+
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can update jobs
+//    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can update jobs
     public ResponseEntity<JobDto> updateJob(@PathVariable Long id, @Valid @RequestBody JobDto jobDto) {
         JobDto updatedJob = jobService.updateJob(id, jobDto);
         return ResponseEntity.ok(updatedJob);
     }
 
 
-    @GetMapping("/download-pdf/{jobId}")
-    public ResponseEntity<byte[]> downloadPdf(@PathVariable Long jobId) {
-        byte[] pdfData = jobService.getJobPdf(jobId);
-        String fileName = jobService.getJobPdfFileName(jobId);
+    @GetMapping("/download-file/{jobId}")
+    public ResponseEntity<byte[]> downloadfile(@PathVariable Long jobId) {
+        try {
+            byte[] fileData = jobService.getJobFile(jobId); // Use getJobFile
+            String fileName = jobService.getJobFileName(jobId); // Use getJobFileName
+            String fileType = jobService.getJobFileType(jobId); // Use new method to get file type
 
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfData);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(fileType)) // Use dynamic fileType
+                    .body(fileData);
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error downloading file: " + e.getMessage(), e);
+        }
     }
 
 
-
-
-
-//
-//    @DeleteMapping("/{jobId}")
-//    @PreAuthorize("hasRole('ORGANIZATION')") // Only users with ROLE_ORGANIZATION can delete jobs
-//    public ResponseEntity<Void> deleteJob(@PathVariable Long jobId) {
-//        jobService.deleteJob(jobId);
-//        return ResponseEntity.noContent().build();
-//    }
 
 }

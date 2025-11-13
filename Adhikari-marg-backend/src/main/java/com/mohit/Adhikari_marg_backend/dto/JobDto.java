@@ -7,11 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class JobDto {
 
-
-    private Long JobId;
+    private Long jobId;
     private String jobTitle;
     private String agency;
     private String location;
@@ -19,9 +19,42 @@ public class JobDto {
     private LocalDate deadline;
     private LocalDate postedOn;
     private String requirement;
-    private byte[] pdfFile;
-    private String pdfFileName;
+    private String fileName; // To display the name of the attached file
+    private String fileType; // To indicate the type of attached file (e.g., "application/pdf")
+    private LocalDateTime uploadDate;
 
+
+    public Long getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public LocalDateTime getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(LocalDateTime uploadDate) {
+        this.uploadDate = uploadDate;
+    }
 
     public String getRequirement() {
         return requirement;
@@ -29,30 +62,6 @@ public class JobDto {
 
     public void setRequirement(String requirement) {
         this.requirement = requirement;
-    }
-
-    public byte[] getPdfFile() {
-        return pdfFile;
-    }
-
-    public void setPdfFile(byte[] pdfFile) {
-        this.pdfFile = pdfFile;
-    }
-
-    public String getPdfFileName() {
-        return pdfFileName;
-    }
-
-    public void setPdfFileName(String pdfFileName) {
-        this.pdfFileName = pdfFileName;
-    }
-
-    public Long getJobId() {
-        return JobId;
-    }
-
-    public void setJobId(Long jobId) {
-        JobId = jobId;
     }
 
     public String getJobTitle() {

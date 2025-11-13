@@ -20,6 +20,11 @@ public class Course {
     @Column(nullable = false)
     private String duration; // e.g. "6 weeks", "3 months"
 
+//    @Column(nullable = false)
+//    private String offer;
+
+
+
     @ManyToOne
     @JoinColumn(name = "institution_id", nullable = false)
     @JsonBackReference
