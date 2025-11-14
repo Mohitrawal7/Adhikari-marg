@@ -50,7 +50,8 @@ public class AuthController {
         user.setPremium(false);
         user.setDOB(registerRequest.getDOB());
         user.setRole("USER");
-
+        user.setQuestion("What is favourite place ?");
+        user.setAnswer("Hawaii");
         userRepository.save(user);
 
         return ResponseEntity.ok("User registered successfully!");

@@ -2,7 +2,10 @@ package com.mohit.Adhikari_marg_backend.controller;
 
 import com.mohit.Adhikari_marg_backend.model.Institution;
 import com.mohit.Adhikari_marg_backend.model.User;
+import com.mohit.Adhikari_marg_backend.repository.UserRepository;
 import com.mohit.Adhikari_marg_backend.service.InstitutionService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -12,9 +15,11 @@ import java.util.List;
 public class InstitutionController {
 
     private final InstitutionService institutionService;
+    private final UserRepository userRepository;
 
-    public InstitutionController(InstitutionService institutionService) {
+    public InstitutionController(InstitutionService institutionService, UserRepository userRepository) {
         this.institutionService = institutionService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -29,9 +34,12 @@ public class InstitutionController {
 
     @PostMapping
     public Institution createInstitution(@RequestBody Institution institution) {
-        // ⚠️ In real app, you’d get authenticated user from SecurityContext
-        User user = new User();
-        user.getId(); // Replace with real user ID
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         return institutionService.createInstitution(institution, user);
     }
 

@@ -34,7 +34,7 @@ public class Institution {
 
     // Owner of this institution
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     @JsonBackReference
     private User owner;
 
