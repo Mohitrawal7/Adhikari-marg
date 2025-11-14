@@ -4,6 +4,7 @@ import axios from "axios";
 import { Card, Form, Input, Button, Typography, message,DatePicker } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "../../style"; 
+import api from "../../api/axiosConfig";  
 
 const { Title } = Typography;
 
@@ -32,7 +33,7 @@ const RegisterPage = () => {
 
     try {
       // Send register request to  backend
-      await axios.post("http://localhost:8080/api/auth/register", formattedValues);
+      await api.post("/api/auth/register", formattedValues);
       messageApi.success({
         content: "Registration successful! Redirecting to login...",
         duration: 2,
