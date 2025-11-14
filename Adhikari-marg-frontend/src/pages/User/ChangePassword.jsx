@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import { Form, Input, Button, message } from "antd";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';

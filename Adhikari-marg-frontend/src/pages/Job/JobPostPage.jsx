@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axiosConfig";
+import api from "../../api/axiosConfig";
 import {
   Card,
   Form,
@@ -12,7 +12,7 @@ import {
   Upload,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -20,7 +20,7 @@ const { TextArea } = Input;
 const JobPostPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [pdfFile, setPdfFile] = useState(null);
+const [attachedFile, setAttachedFile] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (values) => {
@@ -38,8 +38,8 @@ const JobPostPage = () => {
       "job",
       new Blob([JSON.stringify(formattedValues)], { type: "application/json" })
     );
-    if (pdfFile) {
-      formData.append("pdfFile", pdfFile);
+    if (attachedFile) {
+      formData.append("file", attachedFile);
     }
 
     try {
@@ -141,20 +141,20 @@ const JobPostPage = () => {
               <DatePicker style={{ width: "100%" }} format="YYYY-MM-DD" />
             </Form.Item>
 
-            <Form.Item label="Attach PDF (optional)">
+          <Form.Item label="Attach File (optional)"> {/* Changed label */}
               <Upload
                 beforeUpload={(file) => {
-                  setPdfFile(file);
+                  setAttachedFile(file); // Use setAttachedFile
                   return false; // prevent auto upload
                 }}
-                accept=".pdf"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" // Allow various file types
                 maxCount={1}
               >
-                <Button icon={<UploadOutlined />}>Select PDF</Button>
+                <Button icon={<UploadOutlined />}>Select File</Button> {/* Changed button text */}
               </Upload>
-              {pdfFile && (
+              {attachedFile && ( // Use attachedFile
                 <p style={{ marginTop: 8, fontSize: 13 }}>
-                  Selected: <strong>{pdfFile.name}</strong>
+                  Selected: <strong>{attachedFile.name}</strong>
                 </p>
               )}
             </Form.Item>
