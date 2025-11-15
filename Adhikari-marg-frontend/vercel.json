@@ -1,8 +1,27 @@
 {
   "builds": [
-    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
+    { 
+     "src": "package.json",
+     "use": "@vercel/static-build", 
+     "config": { "distDir": "dist" } 
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
   ],
    "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+    "source": "/(.*)", 
+    "destination": "/index.html" 
+   }
+  ],
+  "crons": [
+    {
+      "path": "/api/ping",
+      "schedule": "*/5 * * * *"
+    }
   ]
 }
