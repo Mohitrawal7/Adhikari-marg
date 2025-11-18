@@ -35,7 +35,7 @@ public class Institution {
     // Owner of this institution
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "user_institute")
     private User owner;
 
     // One institution can have multiple courses (max 10)

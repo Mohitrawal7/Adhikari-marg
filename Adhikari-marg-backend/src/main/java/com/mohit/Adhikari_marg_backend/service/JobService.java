@@ -5,7 +5,10 @@ import com.mohit.Adhikari_marg_backend.dto.JobDto;
 import com.mohit.Adhikari_marg_backend.exception.ResourceNotFoundException;
 import com.mohit.Adhikari_marg_backend.model.Course;
 import com.mohit.Adhikari_marg_backend.model.Job;
+import com.mohit.Adhikari_marg_backend.model.User;
 import com.mohit.Adhikari_marg_backend.repository.JobRepository;
+import com.mohit.Adhikari_marg_backend.repository.UserPreferenceRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,6 +30,11 @@ public class JobService {
     private final ModelMapper modelMapper; // Inject ModelMapper
 
     @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private UserPreferenceRepository preferenceRepository;
+
     public JobService(JobRepository jobRepository, ModelMapper modelMapper) {
         this.jobRepository = jobRepository;
         this.modelMapper = modelMapper;
@@ -34,7 +42,8 @@ public class JobService {
 
     // Auto deleting of jobs
 //    @Scheduled(cron = "0 0 0 * * ?")
-    @Scheduled(cron = "0 * * * * ?") // every minute
+    @Scheduled(cron = "0 * * * * ?")
+    @Transactional// every minute
     public void deleteExpiredJobs() {
         LocalDate today = LocalDate.now();
         var expiredJobs = jobRepository.findByDeadlineBefore(today);
@@ -60,6 +69,7 @@ public class JobService {
         return modelMapper.map(job, JobDto.class);
     }
 
+    @Transactional
     public JobDto createJob(JobDto jobDto, MultipartFile file) throws IOException {
         Job job = modelMapper.map(jobDto, Job.class);
 
@@ -79,12 +89,25 @@ public class JobService {
         }
 
         Job savedJob = jobRepository.save(job);
+
+         List<User> matchingUsers = preferenceRepository.findMatchingUsers(
+                         job.getJobTitle() != null ? job.getJobTitle() : "",
+                         job.getLocation() != null ? job.getLocation() : "",
+                         job.getQualification() != null ? job.getQualification() : ""
+                   );
+
+            for (User user : matchingUsers) {
+                notificationService.createNotification(user,
+                    "New job matches your preference: " + job.getJobTitle() , savedJob.getJobId());
+            }
+
         return modelMapper.map(savedJob, JobDto.class); // Map saved Job back to DTO
     }
 
 
 
     // --- File Download Methods (Updated) ---
+    @Transactional
     public byte[] getJobFile(Long jobId) { // Renamed from getJobPdf
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + jobId)); // Use ResourceNotFoundException

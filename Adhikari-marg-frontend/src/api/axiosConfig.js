@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://adhikari-marg.onrender.com" || "http://localhost:8080"
+  baseURL: "http://localhost:8080"
 });
 
 // Add a request interceptor
