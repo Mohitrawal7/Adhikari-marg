@@ -6,6 +6,7 @@ import com.mohit.Adhikari_marg_backend.exception.ResourceNotFoundException;
 import com.mohit.Adhikari_marg_backend.model.Course;
 import com.mohit.Adhikari_marg_backend.model.Job;
 import com.mohit.Adhikari_marg_backend.model.User;
+import com.mohit.Adhikari_marg_backend.model.UserPreference;
 import com.mohit.Adhikari_marg_backend.repository.JobRepository;
 import com.mohit.Adhikari_marg_backend.repository.UserPreferenceRepository;
 import jakarta.transaction.Transactional;
@@ -148,14 +149,57 @@ public class JobService {
 
     // --- Filtering Logic ---
     public List<JobDto> filterJobs(String location, String qualification) {
-        String finalLocation = (location != null && location.trim().isEmpty()) ? null : location;
-        String finalQualification = (qualification != null && qualification.trim().isEmpty()) ? null : qualification;
+        String finalLocation = (location == null || location.trim().isEmpty()) ? null : location.trim();
+        String finalQualification = (qualification == null || qualification.trim().isEmpty()) ? null : qualification.trim();
 
         List<Job> filteredJobs = jobRepository.filterJobs(finalLocation, finalQualification);
         return filteredJobs.stream()
                 .map(job -> modelMapper.map(job, JobDto.class))
                 .collect(Collectors.toList());
     }
+
+
+    //prefferedjobs
+    public List<Job> getPreferredJobs(User user) {
+
+        List<UserPreference> prefs = preferenceRepository.findByUser(user);
+        List<Job> allJobs = jobRepository.findAll();
+
+        return allJobs.stream()
+                .filter(job -> matchesPreferences(job, prefs))
+                .toList();
+    }
+
+    private boolean matchesPreferences(Job job, List<UserPreference> prefs) {
+        for (UserPreference pref : prefs) {
+
+            String type = pref.getType().toLowerCase();
+            String keyword = pref.getKeyword().toLowerCase();
+
+            switch (type) {
+
+                case "location":
+                    if (job.getLocation().toLowerCase().contains(keyword))
+                        return true;
+                    break;
+
+                case "qualification":
+                    if (job.getQualification().toLowerCase().contains(keyword))
+                        return true;
+                    break;
+
+                case "title":
+                    if (job.getJobTitle().toLowerCase().contains(keyword))
+                        return true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        return false;
+    }
+
 
 
 

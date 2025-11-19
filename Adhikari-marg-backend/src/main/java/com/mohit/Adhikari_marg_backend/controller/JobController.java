@@ -3,6 +3,9 @@ package com.mohit.Adhikari_marg_backend.controller;
 
 import com.mohit.Adhikari_marg_backend.dto.JobDto;
 import com.mohit.Adhikari_marg_backend.exception.ResourceNotFoundException;
+import com.mohit.Adhikari_marg_backend.model.Job;
+import com.mohit.Adhikari_marg_backend.model.User;
+import com.mohit.Adhikari_marg_backend.repository.UserRepository;
 import com.mohit.Adhikari_marg_backend.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,22 +13,25 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
 
     private final JobService jobService;
-//    @Autowired
-//    private NotificationService notificationService;
 
     @Autowired
+    private UserRepository userRepository;
+
     public JobController(JobService jobService) {
         this.jobService = jobService;
     }
@@ -94,6 +100,39 @@ public class JobController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error downloading file: " + e.getMessage(), e);
         }
     }
+
+
+
+
+        // Return only the fields you want — VERY clean
+        @GetMapping("/preferred")
+        public ResponseEntity<List<Map<String, Object>>> getPreferredJobs() {
+
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            List<Job> jobs = jobService.getPreferredJobs(user);
+
+            List<Map<String, Object>> result = jobs.stream()
+                    .map(j -> {
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("id", j.getJobId());
+                        data.put("title", j.getJobTitle());
+                        data.put("agency", j.getAgency());
+                        data.put("location", j.getLocation());
+                        data.put("qualification", j.getQualification());
+                        data.put("postedDate", j.getPostedOn()); // or getPostedDate()
+                        return data;
+                    })
+                    .toList();
+
+            return ResponseEntity.ok(result);
+        }
+
+
 
 
 

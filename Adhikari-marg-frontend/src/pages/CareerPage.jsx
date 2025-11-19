@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import api from "../api/axiosConfig";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const CareerPage = () => {
   const { user } = useAuth(); // Logged-in user from context
@@ -22,9 +24,13 @@ const CareerPage = () => {
   };
 
   const fetchPreferredJobs = async () => {
-    // Placeholder API for preferred jobs; implement later
-    // const res = await api.get("/jobs/preferred");
-    setPreferredJobs([]);
+    try {
+      const res = await api.get("/api/jobs/preferred");
+      console.log("Fetched preferred jobs:", res.data);
+      setPreferredJobs(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +50,19 @@ const CareerPage = () => {
       console.error(err);
     }
   };
+
+  const handleDeletePreference = async (id) => {
+  if (!window.confirm("Are you sure you want to delete this preference?")) return;
+
+  try {
+    await api.delete(`/api/preferences/${id}`);
+    setPreferences((prev) => prev.filter((p) => p.id !== id));
+  } catch (err) {
+    console.error("Error deleting preference", err);
+  }
+};
+
+
 
   return (
     <>
@@ -75,27 +94,43 @@ const CareerPage = () => {
           </button>
         </div>
 
-        {/* Preferences List */}
-        <ul className="mb-6">
-          {preferences.map((pref) => (
-            <li key={pref.id} className="border p-2 rounded mb-2">
-              {pref.keyword} ({pref.type})
-            </li>
-          ))}
-        </ul>
+
+
+<ul className="mb-6">
+  {preferences.map((pref) => (
+    <li
+      key={pref.id}
+      className="border p-2 rounded mb-2 flex items-center justify-between"
+    >
+      <span>
+        {pref.keyword} ({pref.type})
+      </span>
+
+       <DeleteOutlined
+        onClick={() => handleDeletePreference(pref.id)}
+        style={{ color: "red", cursor: "pointer" }}
+      />
+    </li>
+  ))}
+</ul>
+
 
         {/* Placeholder Preferred Careers */}
         <h2 className="text-xl font-bold mb-2">Recommended Careers</h2>
-        <ul>
+        <ul className="mb-4 flex flex-col ">
           {preferredJobs.length === 0 ? (
-            <p className="text-gray-500">No recommended careers yet</p>
-          ) : (
-            preferredJobs.map((job) => (
-              <li key={job.jobId} className="border p-2 rounded mb-2">
-                <strong>{job.jobTitle}</strong> - {job.location} ({job.qualification})
-              </li>
-            ))
-          )}
+  <p className="text-gray-500">No recommended careers yet</p>
+) : (
+  preferredJobs.map((job) => (
+    <Link key={job.id} to={`/jobs/${job.id}`} className="job-card border p-4 rounded mb-4">
+      <h3>{job.title}</h3>
+      <p><strong>Location:</strong> {job.location}</p>
+      <p><strong>Qualification:</strong> {job.qualification}</p>
+      <p><strong>Agency:</strong> {job.agency}</p>
+    </Link>
+  ))
+)}
+
         </ul>
       </div>
     </>

@@ -6,6 +6,7 @@ import com.mohit.Adhikari_marg_backend.model.Job;
 import com.mohit.Adhikari_marg_backend.repository.NotificationRepository;
 import com.mohit.Adhikari_marg_backend.repository.JobRepository;
 import com.mohit.Adhikari_marg_backend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class NotificationService {
         return notificationRepo.save(notif);
     }
     // GET ALL NOTIFICATIONS FOR A USER
+    @Transactional
     public List<Notification> getNotifications(User user) {
         return notificationRepo.findByUserIdOrderByCreatedAtDesc(user.getId());
     }

@@ -5,6 +5,7 @@ import com.mohit.Adhikari_marg_backend.model.Notification;
 import com.mohit.Adhikari_marg_backend.model.User;
 import com.mohit.Adhikari_marg_backend.repository.UserRepository;
 import com.mohit.Adhikari_marg_backend.service.NotificationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,19 +26,9 @@ public class NotificationController {
     }
 
 
-    // GET ALL NOTIFICATIONS FOR LOGGED-IN USER
-//    @GetMapping
-//    public List<Notification> getNotifications() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentUsername = authentication.getName();
-//
-//        User user = userRepository.findByUsername(currentUsername)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        return notificationService.getNotifications(user);
-//
-//    }
+    
 
+    @Transactional
     @GetMapping
     public List<NotificationDto> getNotifications() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
