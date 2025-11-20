@@ -20,15 +20,41 @@ public class Course {
     @Column(nullable = false)
     private String duration; // e.g. "6 weeks", "3 months"
 
-//    @Column(nullable = false)
-//    private String offer;
+    private Double price;
 
+    private Double discountPrice; // price after discount
+
+    private String courseType;
 
 
     @ManyToOne
     @JoinColumn(name = "institution_id", nullable = false)
     @JsonBackReference
     private Institution institution;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
 
     // Getters and setters
     public Long getCourseId() {

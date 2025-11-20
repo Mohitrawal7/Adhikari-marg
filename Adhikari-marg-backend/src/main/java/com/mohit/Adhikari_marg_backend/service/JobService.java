@@ -43,17 +43,25 @@ public class JobService {
 
     // Auto deleting of jobs
 //    @Scheduled(cron = "0 0 0 * * ?")
-    @Scheduled(cron = "0 * * * * ?")
-    @Transactional// every minute
+    @Scheduled(cron = "0 * * * * ?") // every minute
+    @Transactional
     public void deleteExpiredJobs() {
         LocalDate today = LocalDate.now();
         var expiredJobs = jobRepository.findByDeadlineBefore(today);
 
         if (!expiredJobs.isEmpty()) {
+
+            // delete notifications for each job
+            for (Job job : expiredJobs) {
+                notificationService.deleteByJob(job);
+            }
+
             jobRepository.deleteAll(expiredJobs);
+
             System.out.println("🧹 Deleted " + expiredJobs.size() + " expired jobs on " + today);
         }
     }
+
 
 
     // --- CRUD Operations ---

@@ -47,9 +47,10 @@ public class NotificationService {
     }
 
     // DELETE NOTIFICATION BY ID
-    public void deleteNotification(Long id) {
-        notificationRepo.deleteById(id);
+    public void deleteByJob(Job job) {
+        notificationRepo.deleteByJob(job);
     }
+
 
     // AUTO DELETE NOTIFICATIONS OLDER THAN 3 DAYS
     @Scheduled(cron = "0 0 * * * *") // runs every hour

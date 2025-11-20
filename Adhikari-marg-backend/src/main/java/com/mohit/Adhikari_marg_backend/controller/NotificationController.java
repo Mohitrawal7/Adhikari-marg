@@ -26,7 +26,7 @@ public class NotificationController {
     }
 
 
-    
+
 
     @Transactional
     @GetMapping
@@ -48,12 +48,12 @@ public class NotificationController {
     }
 
 
-    // DELETE NOTIFICATION BY ID
-    @DeleteMapping("/{id}")
-    public String deleteNotification(@PathVariable Long id) {
-        notificationService.deleteNotification(id);
-        return "Notification deleted";
-    }
+//    // DELETE NOTIFICATION BY ID
+//    @DeleteMapping("/{id}")
+//    public String deleteNotification(@PathVariable Long id) {
+//        notificationService.deleteNotification(id);
+//        return "Notification deleted";
+//    }
 
 
 }

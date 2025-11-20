@@ -19,14 +19,13 @@ public class Institution {
     @Column(nullable = false)
     private String description;
 
-//    @Column(nullable = false)
-//    private String location;
-//
-//    //logo
-//
-//    @Column(nullable = false)
-//    private String contactno;
 
+    private String location;
+
+    //logo
+
+
+    private String contactno;
 
 
 
