@@ -22,31 +22,63 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    fetchNotifications();
-    setNotifCount(notifications.length);
-  }, [user], [notifications]);
+  useEffect(
+    () => {
+      fetchNotifications();
+      setNotifCount(notifications.length);
+    },
+    [user],
+    [notifications]
+  );
 
   return (
     <header className="bg-white shadow-sm py-4 relative">
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center space-x-2">
-          <svg className="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="h-8 w-8 text-primary"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path d="M12 2L2 21h20L12 2zm0 6l-5.33 10h10.66L12 8z" />
           </svg>
           <div className="flex flex-col">
-            <span className="text-xl font-bold text-primary">Adhikari-Marg</span>
-            <span className="text-xs text-gray-500">The Direct Path to Public Service Success</span>
+            <span className="text-xl font-bold text-primary">
+              Adhikari-Marg
+            </span>
+            <span className="text-xs text-gray-500">
+              The Direct Path to Public Service Success
+            </span>
           </div>
         </Link>
 
         {/* Navigation Links */}
         <nav className="hidden lg:flex lg:mr-[30%] md:mr-80 space-x-8 text-gray-600 font-medium">
-          <Link to="/dashboard" className="hover:text-primary transition duration-300">Home</Link>
-          <Link to="/about" className="hover:text-primary transition duration-300">About Us</Link>
-          <Link to="/career" className="hover:text-primary transition duration-300">Preferred Careers</Link>
-          <Link to="/institutions" className="hover:text-primary transition duration-300">Institutions</Link>
+          <Link
+            to="/dashboard"
+            className="hover:text-primary transition duration-300"
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className="hover:text-primary transition duration-300"
+          >
+            About Us
+          </Link>
+          <Link
+            to="/career"
+            className="hover:text-primary transition duration-300"
+          >
+            Preferred Careers
+          </Link>
+          <Link
+            to="/institutions"
+            className="hover:text-primary transition duration-300"
+          >
+            Institutions
+          </Link>
         </nav>
 
         {/* Upgrade Button */}
@@ -60,11 +92,14 @@ const Navbar = () => {
 
         {/* Notification Bell */}
         <div className="relative mr-6">
-          <FiBell size={24} className="cursor-pointer"
-           onClick={() => {
-            setIsNotifOpen(!isNotifOpen);
-            setNotifCount(0);
-           }} />
+          <FiBell
+            size={24}
+            className="cursor-pointer"
+            onClick={() => {
+              setIsNotifOpen(!isNotifOpen);
+              setNotifCount(0);
+            }}
+          />
           {notifCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
               {notifCount}
@@ -80,16 +115,18 @@ const Navbar = () => {
             leaveTo="opacity-0 scale-95"
           >
             <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded p-2 z-50">
+              <p className="text-xl ml-4 mt-0 text-blue-600">Notifications</p>
+                    <br className="b"></br>
               {notifications.length === 0 ? (
                 <p className="text-gray-500 text-sm">No notifications</p>
               ) : (
-                notifications.map((n) => (
-                  <Link
-                  key={n.id}
-                     to={`/jobs/${n.jobId}`}  
-                  className="block border-b p-2 text-sm hover:bg-gray-100 transition"
-                  >
-                   {n.message}
+                notifications.map((n) => (                 
+                    <Link
+                      key={n.id}
+                      to={`/jobs/${n.jobId}`}
+                      className="block border-b p-2 text-sm hover:bg-gray-100 transition"
+                    >
+                      {n.message}
                     </Link>
                 ))
               )}
@@ -99,8 +136,15 @@ const Navbar = () => {
 
         {/* Avatar Dropdown */}
         <div className="relative">
-          <button onClick={() => setIsAvatarOpen(!isAvatarOpen)} className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 hover:border-primary transition">
-            <img src="src/hero.jpg" alt="User Avatar" className="w-full h-full object-cover" />
+          <button
+            onClick={() => setIsAvatarOpen(!isAvatarOpen)}
+            className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 hover:border-primary transition"
+          >
+            <img
+              src="src/hero.jpg"
+              alt="User Avatar"
+              className="w-full h-full object-cover"
+            />
           </button>
           <Transition
             show={isAvatarOpen}
@@ -114,10 +158,19 @@ const Navbar = () => {
             <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg border border-gray-200 z-50 origin-top-right">
               <div className="p-4 border-b border-gray-200">
                 <p className="font-semibold">{user?.username || "Guest"}</p>
-                <p className="text-sm text-gray-500">{user?.email || "No email"}</p>
+                <p className="text-sm text-gray-500">
+                  {user?.email || "No email"}
+                </p>
               </div>
-              <Link className="ml-4" to="/change-password">Change password</Link>
-              <button onClick={logout} className="text-left px-4 py-2 hover:bg-gray-100 transition w-full">Logout</button>
+              <Link className="ml-4" to="/change-password">
+                Change password
+              </Link>
+              <button
+                onClick={logout}
+                className="text-left px-4 py-2 hover:bg-gray-100 transition w-full"
+              >
+                Logout
+              </button>
             </div>
           </Transition>
         </div>
