@@ -252,7 +252,7 @@ const AboutUs = () => {
 
 
 
-      <footer className="bg-white py-10 mx-40 mt-12 shadow-inner">
+      <footer className="bg-white py-10 lg:mx-40 lg:mt-12 mx-10 mt-4  shadow-inner">
           <div className="container mx-auto px-4 text-center text-gray-600">
             <div className="mb-4">
               <a
