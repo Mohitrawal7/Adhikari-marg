@@ -69,7 +69,8 @@ const CareerPage = () => {
       <Navbar />
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2">Your Preferences</h2>
-        <div className="flex gap-2 mb-4">
+
+        <div className="flex flex-wrap gap-2 mb-4 w-full">
           <input
             type="text"
             placeholder="Enter keyword"
