@@ -463,26 +463,26 @@ const Navbar = () => {
           
           <div className="container mx-auto px-4 text-center text-gray-600">
             <div className="mb-4">
-              <a
-                href="#"
+              <Link
+                to="/dashboard"
                 className="text-gray-700 hover:text-primary mx-3 transition duration-300"
               >
                 Privacy Policy
-              </a>
+              </Link>
               <span className="text-gray-400">|</span>
-              <a
-                href="#"
+              <Link
+                to="/terms-of-service"
                 className="text-gray-700 hover:text-primary mx-3 transition duration-300"
               >
                 Terms of Service
-              </a>
+              </Link>
               <span className="text-gray-400">|</span>
-              <a
-                href="#"
+              <Link
+                to="/contact-us"
                 className="text-gray-700 hover:text-primary mx-3 transition duration-300"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
             <p>
               &copy; {new Date().getFullYear()} GOVTCAREERS. All rights
