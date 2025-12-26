@@ -21,6 +21,9 @@ import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import PaymentFailure from "./pages/payment/PaymentFailure";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PremiumRoute from "./components/PremiumRoute";
+// import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -59,17 +62,17 @@ function App() {
         <Route
           path="/career"
           element={
-            <PremiumRoute>
+            <ProtectedRoute>
               <CareerPage />
-            </PremiumRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/institutions"
           element={
-            <PremiumRoute>
+            <ProtectedRoute>
               <InstitutionPage />
-            </PremiumRoute>
+            </ProtectedRoute>
           }
         />
         <Route
@@ -144,6 +147,11 @@ function App() {
               </ProtectedRoute>
           }
         />
+
+        
+{/* <Route path="/pri" element={<ProtectedRoute><PrivacyPolicy /></ProtectedRoute>} /> */}
+<Route path="/terms-of-service" element={<ProtectedRoute><TermsOfService /></ProtectedRoute>} />
+<Route path="/contact-us" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
 
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>

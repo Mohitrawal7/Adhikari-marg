@@ -115,7 +115,7 @@ const Dashboard = () => {
             className="border rounded-lg px-4 py-2 w-full md:w-1/3"
           />
 
-          <select
+          {/* <select
             value={filters.location}
             onChange={(e) =>
               setFilters((prev) => ({ ...prev, location: e.target.value }))
@@ -127,9 +127,9 @@ const Dashboard = () => {
                 {loc.label}
               </option>
             ))}
-          </select>
+          </select> */}
 
-          <select
+          {/* <select
             value={filters.qualification}
             onChange={(e) =>
               setFilters((prev) => ({ ...prev, qualification: e.target.value }))
@@ -141,7 +141,7 @@ const Dashboard = () => {
                 {q.label}
               </option>
             ))}
-          </select>
+          </select> */}
         </div>
 
         {/* Job List */}

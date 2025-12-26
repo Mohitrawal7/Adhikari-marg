@@ -29,6 +29,10 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+
+
+
 	<dependencies>
 
 		<dependency>
@@ -91,11 +95,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -132,6 +132,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+
+
+
+
+
 
 
 	</dependencies>

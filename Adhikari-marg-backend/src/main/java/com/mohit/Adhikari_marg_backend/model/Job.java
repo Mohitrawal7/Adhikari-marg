@@ -1,10 +1,12 @@
 package com.mohit.Adhikari_marg_backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "JOB")
@@ -32,6 +34,10 @@ public class Job {
     @Column(nullable = false)
     private LocalDate postedOn;
 
+    @OneToMany(mappedBy = "job")
+    @JsonManagedReference(value = "job_notification")
+    private List<Notification> notifications;
+
     @Lob
     @Column(columnDefinition = "TEXT")
     private String requirement;
@@ -42,8 +48,16 @@ public class Job {
     private LocalDateTime uploadDate;
 
     @Lob // For large objects, stores binary data directly in the database
-    @Column(length = 10485760) // Max 10MB, adjust as needed
+    @Column(length = 10485760)
     private byte[] data;
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
 
     public String getRequirement() {
         return requirement;

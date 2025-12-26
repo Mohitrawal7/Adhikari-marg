@@ -140,6 +140,7 @@ const JobDetailsPage = () => {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white rounded-lg shadow-md p-6 text-center">
+              <p>On work still not work these 2 feature.</p>
               <button className="bg-primary text-white font-semibold py-3 px-8 rounded-lg w-full mb-3 hover:bg-blue-600 transition duration-300">
                 Apply Now
               </button>

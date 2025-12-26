@@ -74,7 +74,7 @@ const HomePage = () => {
               {/* Login Button */}
               <Link
                 to="/login"
-                className="bg-primary text-blue-500 font-semibold py-3 px-8 rounded-lg shadow-md border-2 border-primary 
+                className="bg-white text-blue-500 font-semibold py-3 px-8 rounded-lg shadow-md border-2 border-primary 
                    hover:bg-blue-500 hover:text-white transition duration-300 text-lg"
               >
                 Login

@@ -19,14 +19,13 @@ public class Institution {
     @Column(nullable = false)
     private String description;
 
-//    @Column(nullable = false)
-//    private String location;
-//
-//    //logo
-//
-//    @Column(nullable = false)
-//    private String contactno;
 
+    private String location;
+
+    //logo
+
+
+    private String contactno;
 
 
 
@@ -35,7 +34,7 @@ public class Institution {
     // Owner of this institution
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "user_institute")
     private User owner;
 
     // One institution can have multiple courses (max 10)

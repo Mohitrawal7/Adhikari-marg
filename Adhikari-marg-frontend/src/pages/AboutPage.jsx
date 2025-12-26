@@ -3,6 +3,7 @@ import { Transition } from '@headlessui/react';
 
 
 import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 
 const featuresData = [
   {
@@ -67,33 +68,32 @@ const testimonialsData = [
 
 const developersData = [
   {
-    name: "Alice Johnson",
+    name: "Mohit Rawal",
     role: "Lead Frontend Developer",
     bio: "Passionate about creating intuitive user experiences and elegant interfaces.",
-    image: "https://randomuser.me/api/portraits/women/6.jpg" // Placeholder image
+    image: "src/hero.jpg" // Placeholder image
   },
   {
-    name: "Bob Williams",
+    name: "Mohit Rawal",
     role: "Backend Engineer",
     bio: "Specializes in scalable architectures and robust API development.",
-    image: "https://randomuser.me/api/portraits/men/7.jpg"
+    image: "src/hero.jpg"
   },
   {
-    name: "Charlie Davis",
+    name: "Mohit Rawal",
     role: "UI/UX Designer",
     bio: "Crafting beautiful and functional designs that delight users.",
-    image: "https://randomuser.me/api/portraits/men/8.jpg"
+    image: "src/hero.jpg"
   },
   {
-    name: "Diana Miller",
+    name: "Mohit Rawal",
     role: "Project Manager",
     bio: "Ensuring smooth project delivery and fostering team collaboration.",
-    image: "https://randomuser.me/api/portraits/women/9.jpg"
+    image: "src/hero.jpg"
   },
 ];
 
 const AboutUs = () => {
-
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -118,9 +118,12 @@ const AboutUs = () => {
 
 
   return (
+
+    <>
+    <Navbar />
     <div className="min-h-screen bg-gray-50 font-sans antialiased text-gray-800">
 
-      <Navbar />
+      
 
        <section className="bg-white py-20 px-4 sm:px-6 lg:px-8 shadow-sm">
       <div className="max-w-7xl mx-auto text-center">
@@ -204,14 +207,14 @@ const AboutUs = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevTestimonial}
-            className="absolute top-1/2 left-0 -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+            className="absolute top-1/2 left-0  lg:-left-20 -translate-y-1/2 bg-blue-500 text-white p-3 px-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
             aria-label="Previous Testimonial"
           >
             &larr;
           </button>
           <button
             onClick={nextTestimonial}
-            className="absolute top-1/2 right-0 -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+            className="absolute top-1/2 right-0 lg:-right-20 -translate-y-1/2 bg-blue-500 text-white p-3 px-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
             aria-label="Next Testimonial"
           >
             &rarr;
@@ -252,29 +255,29 @@ const AboutUs = () => {
 
 
 
-      <footer className="bg-white py-10 mx-40 mt-12 shadow-inner">
+      <footer className="bg-white py-10 lg:mx-40 lg:mt-12 mx-10 mt-4  shadow-inner">
           <div className="container mx-auto px-4 text-center text-gray-600">
             <div className="mb-4">
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-gray-700 hover:text-primary mx-3 transition duration-300"
               >
                 Privacy Policy
-              </a>
+              </Link>
               <span className="text-gray-400">|</span>
-              <a
-                href="#"
+              <Link
+                to="/terms-of-service"
                 className="text-gray-700 hover:text-primary mx-3 transition duration-300"
               >
                 Terms of Service
-              </a>
+              </Link>
               <span className="text-gray-400">|</span>
-              <a
-                href="#"
+              <Link
+                to="/contact-us"
                 className="text-gray-700 hover:text-primary mx-3 transition duration-300"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
             <p>
               &copy; {new Date().getFullYear()} GOVTCAREERS. All rights
@@ -286,6 +289,8 @@ const AboutUs = () => {
           </div>
         </footer>
     </div>
+
+    </>
   );
 };
 

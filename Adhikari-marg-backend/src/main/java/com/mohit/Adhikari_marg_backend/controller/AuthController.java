@@ -80,10 +80,4 @@ public class AuthController {
 
 
 
-    // Add health endpoint here
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("OK");
-    }
-
 }

@@ -35,8 +35,43 @@ public class User {
     private LocalDate DOB;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference(value = "user_institute")
     private List<Institution> institutions;
+
+    @Column(nullable = false)
+    private String question;
+
+    @Column(nullable = false)
+    private String answer;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "user_preference")
+    private List<UserPreference> preferences;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "user_notification")
+    private List<Notification> notifications;
+
+    public List<UserPreference> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<UserPreference> preferences) {
+        this.preferences = preferences;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
 
     public List<Institution> getInstitutions() {
         return institutions;
@@ -46,37 +81,6 @@ public class User {
         this.institutions = institutions;
     }
 
-    @Column(nullable = false)
-    private String question;
-
-    @Column(nullable = false)
-    private String answer;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<UserPreference> preferences;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Notification> notifications;
-//
-//    public List<UserPreference> getPreferences() {
-//        return preferences;
-//    }
-//
-//    public void setPreferences(List<UserPreference> preferences) {
-//        this.preferences = preferences;
-//    }
-//
-//    public List<Notification> getNotifications() {
-//        return notifications;
-//    }
-//
-//    public void setNotifications(List<Notification> notifications) {
-//        this.notifications = notifications;
-//    }
-
-    public String getQuestion() {
-        return question;
-    }
 
     public void setQuestion(String question) {
         this.question = question;

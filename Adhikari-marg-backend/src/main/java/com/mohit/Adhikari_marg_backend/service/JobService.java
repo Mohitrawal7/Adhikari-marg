@@ -5,7 +5,11 @@ import com.mohit.Adhikari_marg_backend.dto.JobDto;
 import com.mohit.Adhikari_marg_backend.exception.ResourceNotFoundException;
 import com.mohit.Adhikari_marg_backend.model.Course;
 import com.mohit.Adhikari_marg_backend.model.Job;
+import com.mohit.Adhikari_marg_backend.model.User;
+import com.mohit.Adhikari_marg_backend.model.UserPreference;
 import com.mohit.Adhikari_marg_backend.repository.JobRepository;
+import com.mohit.Adhikari_marg_backend.repository.UserPreferenceRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,6 +31,11 @@ public class JobService {
     private final ModelMapper modelMapper; // Inject ModelMapper
 
     @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private UserPreferenceRepository preferenceRepository;
+
     public JobService(JobRepository jobRepository, ModelMapper modelMapper) {
         this.jobRepository = jobRepository;
         this.modelMapper = modelMapper;
@@ -35,15 +44,24 @@ public class JobService {
     // Auto deleting of jobs
 //    @Scheduled(cron = "0 0 0 * * ?")
     @Scheduled(cron = "0 * * * * ?") // every minute
+    @Transactional
     public void deleteExpiredJobs() {
         LocalDate today = LocalDate.now();
         var expiredJobs = jobRepository.findByDeadlineBefore(today);
 
         if (!expiredJobs.isEmpty()) {
+
+            // delete notifications for each job
+            for (Job job : expiredJobs) {
+                notificationService.deleteByJob(job);
+            }
+
             jobRepository.deleteAll(expiredJobs);
+
             System.out.println("🧹 Deleted " + expiredJobs.size() + " expired jobs on " + today);
         }
     }
+
 
 
     // --- CRUD Operations ---
@@ -60,6 +78,7 @@ public class JobService {
         return modelMapper.map(job, JobDto.class);
     }
 
+    @Transactional
     public JobDto createJob(JobDto jobDto, MultipartFile file) throws IOException {
         Job job = modelMapper.map(jobDto, Job.class);
 
@@ -79,12 +98,25 @@ public class JobService {
         }
 
         Job savedJob = jobRepository.save(job);
+
+         List<User> matchingUsers = preferenceRepository.findMatchingUsers(
+                         job.getJobTitle() != null ? job.getJobTitle() : "",
+                         job.getLocation() != null ? job.getLocation() : "",
+                         job.getQualification() != null ? job.getQualification() : ""
+                   );
+
+            for (User user : matchingUsers) {
+                notificationService.createNotification(user,
+                    "New job matches your preference: " + job.getJobTitle() , savedJob.getJobId());
+            }
+
         return modelMapper.map(savedJob, JobDto.class); // Map saved Job back to DTO
     }
 
 
 
     // --- File Download Methods (Updated) ---
+    @Transactional
     public byte[] getJobFile(Long jobId) { // Renamed from getJobPdf
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + jobId)); // Use ResourceNotFoundException
@@ -125,14 +157,57 @@ public class JobService {
 
     // --- Filtering Logic ---
     public List<JobDto> filterJobs(String location, String qualification) {
-        String finalLocation = (location != null && location.trim().isEmpty()) ? null : location;
-        String finalQualification = (qualification != null && qualification.trim().isEmpty()) ? null : qualification;
+        String finalLocation = (location == null || location.trim().isEmpty()) ? null : location.trim();
+        String finalQualification = (qualification == null || qualification.trim().isEmpty()) ? null : qualification.trim();
 
         List<Job> filteredJobs = jobRepository.filterJobs(finalLocation, finalQualification);
         return filteredJobs.stream()
                 .map(job -> modelMapper.map(job, JobDto.class))
                 .collect(Collectors.toList());
     }
+
+
+    //prefferedjobs
+    public List<Job> getPreferredJobs(User user) {
+
+        List<UserPreference> prefs = preferenceRepository.findByUser(user);
+        List<Job> allJobs = jobRepository.findAll();
+
+        return allJobs.stream()
+                .filter(job -> matchesPreferences(job, prefs))
+                .toList();
+    }
+
+    private boolean matchesPreferences(Job job, List<UserPreference> prefs) {
+        for (UserPreference pref : prefs) {
+
+            String type = pref.getType().toLowerCase();
+            String keyword = pref.getKeyword().toLowerCase();
+
+            switch (type) {
+
+                case "location":
+                    if (job.getLocation().toLowerCase().contains(keyword))
+                        return true;
+                    break;
+
+                case "qualification":
+                    if (job.getQualification().toLowerCase().contains(keyword))
+                        return true;
+                    break;
+
+                case "title":
+                    if (job.getJobTitle().toLowerCase().contains(keyword))
+                        return true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        return false;
+    }
+
 
 
 
