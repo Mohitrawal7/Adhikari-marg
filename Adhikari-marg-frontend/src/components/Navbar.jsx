@@ -338,11 +338,11 @@ const Navbar = () => {
         <Link to="/career" className="text-gray-700">Preferred Careers</Link>
         <Link to="/institutions" className="text-gray-700">Institutions</Link>
 
-        {!user?.premium && (
+        {/* {!user?.premium && (
           <Link to="/premium" className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium">
             Upgrade to Premium
           </Link>
-        )}
+        )} */}
       </div>
 
       {/* RIGHT — Notifications + Avatar */}
@@ -390,7 +390,7 @@ const Navbar = () => {
         {/* Profile Avatar */}
         <div className="relative">
           <img
-            src="src/hero.jpg"
+            src=""
             alt="profile"
             className="w-12 h-12 rounded-full cursor-pointer border"
             onClick={() => {
@@ -407,9 +407,9 @@ const Navbar = () => {
                 <p className="text-xs text-gray-500">{user?.email}</p>
               </div>
 
-              <Link to="/change-password" className="block px-3 py-2 text-sm hover:bg-gray-100">
+              {/* <Link to="/change-password" className="block px-3 py-2 text-sm hover:bg-gray-100">
                 Change Password
-              </Link>
+              </Link> */}
 
               <button
                 onClick={logout}

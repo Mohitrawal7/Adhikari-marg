@@ -62,17 +62,17 @@ function App() {
         <Route
           path="/career"
           element={
-            <PremiumRoute>
+            <ProtectedRoute>
               <CareerPage />
-            </PremiumRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/institutions"
           element={
-            <PremiumRoute>
+            <ProtectedRoute>
               <InstitutionPage />
-            </PremiumRoute>
+            </ProtectedRoute>
           }
         />
         <Route
