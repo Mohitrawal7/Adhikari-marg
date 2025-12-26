@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-300 font-sans  text-dark-text">
       {/* Top Bar with Name and Auth Links */}
-      <div className="bg-white shadow-sm py-4">
+      <div className="bg-white mx-10 rounded-md shadow-sm py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo/Name */}
           <div className="flex items-center space-x-2">
@@ -48,8 +48,9 @@ const HomePage = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative bg-white py-16 overflow-hidden md:py-24">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+      <div className="bg-slate-200 mx-10 mt-2">
+      <section className="relative bg-white rounded-md py-24 overflow-hidden md:py-24">
+        <div className="container mx-8 bg-white px-8 flex flex-col md:flex-row items-center justify-between ">
           {/* Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-dark-text leading-tight mb-4">
@@ -98,6 +99,7 @@ const HomePage = () => {
           <div className="absolute -bottom-8 left-1/4 w-80 h-80 bg-light-blue rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
         </div>
       </section>
+      </div>
 
       <div className="bg-gray-200 shadow-white mx-10 mt-10 ">
         {/* How It Works Section */}
