@@ -9,6 +9,7 @@ public class RegisterRequest {
     private String username;
     private String password;
     private String email;
+    private String role;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate DOB;
@@ -21,6 +22,14 @@ public class RegisterRequest {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getPassword() {

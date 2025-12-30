@@ -46,7 +46,7 @@ public class AuthController {
         user.setEmail(registerRequest.getEmail());
         user.setPremium(false);
         user.setDOB(registerRequest.getDOB());
-        user.setRole("USER");
+        user.setRole(registerRequest.getRole());
         user.setQuestion("What is favourite place ?");
         user.setAnswer("Hawaii");
         userRepository.save(user);
