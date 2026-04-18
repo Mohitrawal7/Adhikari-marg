@@ -4,7 +4,7 @@ import com.mohit.Adhikari_marg_backend.dto.PaymentRequest;
 import com.mohit.Adhikari_marg_backend.dto.PaymentResponse;
 import com.mohit.Adhikari_marg_backend.model.User;
 import com.mohit.Adhikari_marg_backend.repository.UserRepository;
-import com.mohit.Adhikari_marg_backend.service.EsewaService;
+//import com.mohit.Adhikari_marg_backend.service.EsewaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

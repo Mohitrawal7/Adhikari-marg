@@ -14,11 +14,7 @@ public class AdhikariMargBackendApplication {
 	}
 
 
-	@PostConstruct
-	public void checkEnv() {
-		System.out.println("URL=" + System.getenv("SPRING_DATASOURCE_URL"));
-		System.out.println("USER=" + System.getenv("SPRING_DATASOURCE_USERNAME"));
-	}
+
 
 
 }

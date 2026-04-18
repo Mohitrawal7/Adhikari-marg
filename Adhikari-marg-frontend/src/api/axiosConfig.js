@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-   baseURL:  "https://adhikari-marg.onrender.com"
+   baseURL: "https://adhikari-marg.onrender.com"
+  
 });
 
 // Add a request interceptor
@@ -16,7 +17,8 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    // Do something with request error
+    // Do something withy
+    //  request error
     return Promise.reject(error);
   }
 );
